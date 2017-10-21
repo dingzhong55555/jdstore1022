@@ -16,7 +16,11 @@
     <div> 数量 : <%= @product.quantity %> </div>
     <div class="product-price"> ￥ <%= @product.price %> </div>
     <div class="pull-right">
-      <%= link_to("加入购物车", add_to_cart_product_path(@product), method: :post, :class => "btn btn-danger btn-lg") %>
+      <% if @product.quantity <= 0 %>
+        <span>商品销售一空，正在补货中。</span>
+      <% else %>
+        <%= link_to("加入购物车", add_to_cart_product_path(@product), method: :post, :class => "btn btn-danger btn-lg") %>
+      <% end %>
     </div>
   </div>
 </div>
