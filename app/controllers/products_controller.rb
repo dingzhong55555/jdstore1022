@@ -8,4 +8,10 @@ class ProductsController < ApplicationController
     @product = Product.find(params[:id])
   end
 
+  def add_to_cart
+    @product = Product.find(params[:id])
+    flash[:alert] = "已加入购物车"
+    redirect_to :back
+  end
+
 end
