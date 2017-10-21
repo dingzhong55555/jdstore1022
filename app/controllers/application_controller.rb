@@ -7,4 +7,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # 只有宣告current_cart为辅助方法才能在view里面使用current_cart这个方法
+  helper_method :current_cart
+
+  def current_cart
+    @current_cart ||= find_cart
+  end
+
+  private
+
+  def find_cart
+    cart = Cart.find_by(id: session[:cart_id])
+    if cart.blank?
+      cart = Cart.create
+    end
+    session[:cart_id] = cart.id
+    return cart
+  end
+
 end
