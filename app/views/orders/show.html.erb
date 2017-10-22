@@ -61,6 +61,11 @@
       </tbody>
     </table>
 
+    <div class="cancel pull-left">
+      <% if @order.order_placed? || @order.paid? %>
+        <%= link_to("Apply To Cancel", apply_to_cancel_order_path(@order.token), method: :post, class: "btn btn-primary") %>
+      <% end %>
+    </div>
 
     <div class="payment pull-right">
       <% if !@order.is_paid? %>
