@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
 
   def pay_with_alipay
     @order = Order.find_by_token(params[:id])
-    @order.pay!
+    @order.make_payment!
     @order.set_paymeny_with_method("alipay")
     redirect_to :back
     flash[:notice] = "已用支付宝完成付款！"
@@ -39,7 +39,7 @@ class OrdersController < ApplicationController
 
   def pay_with_alipay
     @order = Order.find_by_token(params[:id])
-    @order.pay!
+    @order.make_payment!
     @order.set_paymeny_with_method("wechat")
     redirect_to :back
     flash[:notice] = "已用微信完成付款！"
