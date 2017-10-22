@@ -21,7 +21,7 @@ class Order < ApplicationRecord
     self.update_columns(payment_method: method)
   end
 
-  include :AASM
+  include AASM
 
   aasm do
     state :order_placed
@@ -31,7 +31,7 @@ class Order < ApplicationRecord
     state :order_canclled
     state :good_returned
 
-    event :make_payment after_commit: :pay! do
+    event :make_payment, after_commit: :pay! do
      transitions from: :order_placed, to: :paid
    end
 
