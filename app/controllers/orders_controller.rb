@@ -7,11 +7,25 @@ class OrdersController < ApplicationController
     @order.total_price = current_cart.total_price(current_cart.cart_items)
     if
       @order.save
-      
-      redirect_to order_path(@order)
+      @product_list = ProductList.new
+      @product_list.order = @order
+      current_cart.cart_items.each do |cart_item|
+        @product_list.product_name = cart_item.product.title
+        @product_list.product_price = cart_item.product.price
+        @product_list.product_quantity = cart_item.quantity
+      end
+      @product_list.save
+      current_cart.clean!(current_cart.cart_items)
+      # 原来路由后面的参数是在controller的这个路由辅助方法里面注入的
+      redirect_to order_path(@order.token)
     else
       render "carts/checkout"
     end
+  end
+
+  def show
+    @order = Order.find_by_token(params[:id])
+    @product_lists = @order.product_lists
   end
 
   private
