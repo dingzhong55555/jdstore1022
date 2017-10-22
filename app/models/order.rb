@@ -12,4 +12,12 @@ class Order < ApplicationRecord
   def generate_token
     self.token = SecureRandom.uuid
   end
+
+  def pay!
+    self.update_columns(is_paid: true)
+  end
+
+  def set_paymeny_with_method(method)
+    self.update_columns(payment_method: method)
+  end
 end
