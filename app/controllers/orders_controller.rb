@@ -16,6 +16,7 @@ class OrdersController < ApplicationController
       end
       @product_list.save
       current_cart.clean!(current_cart.cart_items)
+      OrderMailer.notice_order_placed(@order).deliver!
       # 原来路由后面的参数是在controller的这个路由辅助方法里面注入的
       redirect_to order_path(@order.token)
     else
